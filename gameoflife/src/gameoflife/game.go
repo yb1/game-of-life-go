@@ -21,7 +21,6 @@ func (f *field) start(tick int) {
 }
 
 func (f *field) calcTick() {
-
 	nextGenField := make([][]string, cap(*f))
 
 	for i := 0 ; i < len(*f) ; i++ {
@@ -52,7 +51,6 @@ func (f *field) calcTick() {
 }
 
 func (f field) calcNumberOfNeighbors(x, y int) int {
-	
 	count := 0
 	
 	for i := -1 ; i <= 1 ; i++ {
@@ -89,17 +87,35 @@ func main() {
 
 	fmt.Print("Enter matrix size: ")
 	var inputSize int
-	_, err := fmt.Scanf("%d\n", &inputSize)
-	inputField := make([][]string, inputSize)
+	//_, err := fmt.Scanf("%d\n", &inputSize)
+
 	//fmt.Println("Debug: input: ", inputSize, "length: ", len(inputField))
 	
 	matrix, err := ioutil.ReadFile("matrix.txt")
 	check(err)
 	
 	matrixstr := string(matrix)
-	//fmt.Println("Debug: matrixstr: ",matrixstr)
+
+	inStrings := strings.Split(matrixstr,"\n")
+	fmt.Printf("instringleng %v \n", len(inStrings))
+	stringLength := len(inStrings[0])
+	fmt.Println("Debug: string0: ", len(inStrings[0]))
+	for i := 1 ; i < len(inStrings)-1 ; i++ {
+		fmt.Println("stringother: ", len(inStrings[i]))
+		if stringLength != len(inStrings[i]) {
+			fmt.Println("Matrix width is different")
+			return
+		}
+
+	}
+	inputSize = len(inStrings[0])/2
+	fmt.Println("inputSize: ", inputSize)
+	inputField := make([][]string, inputSize)
+
+
+	fmt.Println("Debug: matrixstr: ",matrixstr)
 	inputString := strings.Fields(matrixstr)
-	//fmt.Println("Debug: inputString: ", inputString)
+	fmt.Println("Debug: inputString: ", inputString)
 	for i := 0 ; i < inputSize ; i++ {
 		inputField[i] = make([]string, inputSize)
 		for j := 0 ; j < inputSize ; j++ {
